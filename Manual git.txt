@@ -49,3 +49,39 @@ git mv nombreArchivo.extensión NuevoNombre.extensión
 
 //Muestra el historial de los commit
 git log --oneline 
+
+// Clonar un repositorio remoto
+git clone url-del-repositorio
+
+// Ver la lista de ramas en el repositorio
+git branch
+
+// Cambiar a una rama existente
+git checkout nombre-de-la-rama
+
+// Crear y cambiar a una nueva rama
+git checkout -b nombre-de-la-rama
+
+// Fusionar una rama en la rama actual
+git merge nombre-de-la-rama
+
+// Descargar cambios del repositorio remoto y fusionarlos con la rama actual
+git pull origin nombre-de-la-rama
+
+// Enviar cambios locales al repositorio remoto
+git push origin nombre-de-la-rama
+
+// Ver los cambios realizados en los archivos del repositorio desde el último commit
+git diff
+
+// Descartar cambios locales en un archivo
+git checkout nombre-del-archivo
+
+// Ver los cambios realizados en un archivo desde el último commit
+git diff nombre-del-archivo
+
+// Ver la lista de repositorios remotos
+git remote -v
+
+// Eliminar un repositorio remoto
+git remote rm nombre-del-repositorio-remoto
