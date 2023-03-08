@@ -1,19 +1,45 @@
+//Listar el archivo de configuración de git
 git config -l
 
+//Establecer un nombre de usuario de git
 git config --global user.name nombreUser
+
+//Establecer un correo de git
 git config --global user.email nombre@correo.es
 
+//Establecer un editor de codigo como predeterminado
 git config --global core.editor "code --wait"
 git config --global -e 
+
+//Configurar git para windows para evitar problemas con los saltos de línea al hacer merge
 git config --global core.autocrlf true 
 
+//Ir a la ruta del archivo que quiero añadir a git
 cd DirectorioComiteable/
 
+//Inicializar un repositorio
 git init
 
+//Añadir todo al staging area
 git add . (todo)
+
+//Añadir archivo al staging area
 git add nombreArchivo
+
+//Añadir todos los archivos con una extensión
 git add*.extensión
 
+//Nuevo commit con nombre
 git commmit -m "nombre commit"
 
+//Eliminar archivo
+git rm nombreArchivo.extensión
+
+//Restaurar archivo
+git restore nombreArchivo.extensión
+
+//Renombrar archivo
+git add nombreArchivo.extensión NuevoNombre.extensión 
+
+//Renombrar archivo y añadir al staging area
+git mv nombreArchivo.extensión NuevoNombre.extensión 
