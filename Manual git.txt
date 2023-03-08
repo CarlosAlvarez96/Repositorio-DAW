@@ -1,0 +1,19 @@
+git config -l
+
+git config --global user.name nombreUser
+git config --global user.email nombre@correo.es
+
+git config --global core.editor "code --wait"
+git config --global -e 
+git config --global core.autocrlf true 
+
+cd DirectorioComiteable/
+
+git init
+
+git add . (todo)
+git add nombreArchivo
+git add*.extensión
+
+git commmit -m "nombre commit"
+
