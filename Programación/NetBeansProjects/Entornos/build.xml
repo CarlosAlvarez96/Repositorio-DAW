@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?<project name="Entornos" default="CuentaTest">
+
+  <!-- Define the location of the JacocoAnt.jar library -->
+  <path id="jacocoant.lib">
+    <pathelement location="lib/jacocoant.jar"/>
+  </path>
+
+  <!-- Load the JacocoAnt taskdef -->
+  <taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml">
+    <classpath refid="jacocoant.lib"/>
+  </taskdef>
+
+  <!-- Define the test target -->
+  <target name="test">
+    <jacoco:coverage destfile="${basedir}/jacoco.exec">
+      <junit fork="yes" forkmode="once">
+        <formatter type="plain"/>
+        <test name="your.test.package.TestClass" />
+      </junit>
+    </jacoco:coverage>
+  </target>
+
+</project>

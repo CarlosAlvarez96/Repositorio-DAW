@@ -1,0 +1,15 @@
+
+	-- Ejercicio 14
+SELECT precio, ROUND(precio * 1.05) 
+AS precio_incrementado, DATE_FORMAT(fecha, '%d/%m/%Y') AS fecha_formateada, tema
+FROM conferencia
+ORDER BY precio_incrementado DESC;
+
+	-- Ejercicio 15
+
+15. Realizar una consulta sobre la tabla ponentes que muestre todos los campos alfanuméricos en mayúsculas, se 
+deben concatenar los apellidos y mostrar una única columna para ambos. El resultado se debe ordenar por la 
+columna de apellidos resultante de forma ascendente.
+
+SELECT *
+

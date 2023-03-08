@@ -1,0 +1,29 @@
+-- 29. Realizar una consulta donde se obtenga el nombre de los ponentes junto a la referencia y el tema de las 
+-- conferencias en las que han participado.
+
+SELECT nombre, referencia, tema
+FROM conferencia,tema
+WHERE 
+
+-- 30. Realizar una consulta que obtenga un listado con el nombre y apellidos de los asistentes que hayan asistido a 
+-- la conferencia con referencia “PWB1314”.
+
+
+
+-- 31. Realizar una consulta que muestre el número de asistentes a cada una de las conferencias.
+-- Bases de Datos – Unidad 4: Realización de consultas
+
+
+
+-- 32. Realizar una consulta que muestre la sala donde cada ponente realiza su conferencia. La consulta además de 
+-- los datos del ponente debe mostrar el nombre de la sala, el tema de la conferencia y el orden de intervención.
+-- Los resultados se deben ordenar por el tema y el orden de intervención.
+
+
+
+-- 33. Realizar una consulta que muestre el total de asistentes por conferencia y sala. El resultado se debe ordenar 
+-- por el número de asistentes.
+
+
+
+-- 34. Realizar una consulta que muestre los distintos ponentes que han utilizado la sala “Afrodita”

@@ -1,0 +1,37 @@
+-- Ejercicio 8 
+
+SELECT tema, fecha
+	FROM conferencia
+	WHERE turno = 2t" AND sala IN("Apolo")
+
+--Ejercicio 9
+
+SELECT *
+	FROM asistente
+	WHERE apellido1 LIKE "M%R%"
+
+-- Ejercicio 10
+
+SELECT *
+	FROM conferencia
+	WHERE precio BETWEEN 12 AND 19 tema NOT IN("Programación web");
+
+-- Ejercicio 11
+
+SELECT nombre, fechaNac, CONCAT_WS(apellido1,' ',apellido2) apellidos
+	FROM asistente
+	WHERE fechaNac BETWEEN "1974/01/01" AND "1985/01/01"
+	ORDER BY fechaNac DESC;
+
+-- Ejercicio 12
+
+SELECT *
+	FROM conferencia
+	WHERE tema LIKE "Programación%" 
+	ORDER BY precio DESC;
+
+-- Ejercicio 13
+
+SELECT tema, precio AS "Descuento 0%", precio-precio*0.05 AS "Descuento 5%",
+	precio-precio*0.1 AS "Descuento 10%", precio-precio*0.15 AS "Descuento 15%",
+	precio-precio*0.2 AS "Descuento 20%" FROM conferencia;

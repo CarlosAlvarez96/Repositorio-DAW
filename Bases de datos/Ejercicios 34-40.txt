@@ -1,0 +1,42 @@
+-- EJERCICIO 35 
+-- Realizar una consulta que seleccione los ponentes cuyo primer apellido sea igual al primer apellido del asistente
+-- de menor edad.
+
+SELECT *
+FROM ponente
+WHERE apellido1 IN (SELECT apellido1
+                   FROM asistente
+                   WHERE fechaNac=(SELECT MAX(fechaNac) 
+                                   FROM asistente));
+
+-- EJERCICIO 36
+-- Realizar una consulta (utilizando subconsultas) que obtenga los distintos ponentes que han usado la sala
+-- “Afrodita” para dar una conferencia.
+
+SELECT *
+FROM ponente 
+WHERE idPoniente IN (SELECT idPonente
+		    FROM participa
+		    WHERE nombreSala="Afrodita"));
+
+-- EJERCICIO 37
+-- Realizar una consulta que muestre los asistentes de la empresa “BigSoft” que asisten a algunas de las sesiones
+-- de la conferencia sobre “Programación Web”.
+
+
+
+-- EJERCICIO 38
+-- Realizar una consulta que muestre los asistentes que sean hombres y hayan nacido antes del “01/01/1985”, y
+-- además hayan asistido a una conferencia sobre “Programación Web”.
+
+
+
+-- EJERCICIO 39
+-- Realizar una consulta que muestre el total de gratificaciones recibidas por cada uno de los ponentes.
+
+
+
+-- EJERCICIO 40
+-- Realizar una consulta que muestre los asistentes a cada una de las conferencias que se celebran el día
+-- “02/10/2013”. El resultado debe mostrarse ordenado por el tema de la conferencia, así como por los apellidos
+-- y nombre de los asistentes.
