@@ -47,4 +47,5 @@ git add nombreArchivo.extensión NuevoNombre.extensión
 //Renombrar archivo y añadir al staging area
 git mv nombreArchivo.extensión NuevoNombre.extensión 
 
-jvbhebvh
+//Muestra el historial de los commit
+git log --oneline 
