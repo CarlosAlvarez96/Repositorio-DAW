@@ -1,4 +1,4 @@
--- Ejercicio 1
+ -- Ejercicio 1
 SELECT 5*10,5+10,10-5,10/5;
 -- Ejercicio 2
 SELECT 5*10 AS "Multiplicación", 5+10 AS "Suma", 10-5 AS "Resta", 10/5 AS "División";
