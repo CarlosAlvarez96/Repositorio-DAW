@@ -29,6 +29,9 @@ git add nombreArchivo
 //Añadir todos los archivos con una extensión
 git add*.extensión
 
+//Mostrar el estado de mis archivos
+git status -s(Para verlo de forma detallada)
+
 //Nuevo commit con nombre
 git commmit -m "nombre commit"
 
@@ -43,3 +46,5 @@ git add nombreArchivo.extensión NuevoNombre.extensión
 
 //Renombrar archivo y añadir al staging area
 git mv nombreArchivo.extensión NuevoNombre.extensión 
+
+jvbhebvh
