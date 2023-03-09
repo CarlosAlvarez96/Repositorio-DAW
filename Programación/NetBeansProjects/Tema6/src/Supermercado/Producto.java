@@ -11,4 +11,9 @@ public record Producto(String nombre, String marca, int precio) {
         public String toString(){
             return nombre+" "+marca+" ... "+precio+"€";
         }
+
+    public String getNombre() {
+        return nombre;
+    }
+        
 }
