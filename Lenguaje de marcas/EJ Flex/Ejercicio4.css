@@ -1,0 +1,14 @@
+#Caja{
+    height: 430px;
+    width: 300px;
+    border: solid 1px green;
+    margin: 50px;
+    padding: 5px;
+    display: flex;
+    flex-wrap: wrap;
+}
+.Final{
+    display: flex;
+    justify-content: space-evenly;
+    
+}
