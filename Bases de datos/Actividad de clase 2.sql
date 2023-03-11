@@ -1,0 +1,202 @@
+-- Relación de ejercicios 2.
+
+/*1. Realizar una consulta que devuelva el nombre de los clientes, el
+código de pedido y los días de retraso de aquellos pedidos que
+no han sido entregados a tiempo (fecha de entrega superior a
+la fecha estimada y estado igual a entregado). Ordenar el
+resultado por el código de pedido de forma ascendente.*/
+
+
+SELECT c.nombre_cliente, p.codigo_pedido, DATEDIFF(p.fecha_entrega, p.fecha_esperada) AS dias_retraso
+FROM cliente c
+INNER JOIN pedido p ON c.id_cliente = p.id_cliente
+WHERE p.estado = 'entregado' AND p.fecha_entrega > p.fecha_esperada
+ORDER BY p.codigo_pedido ASC;
+
+
+
+/* 2. Realizar una consulta que muestre el nombre de cada empleado
+(aunque no tenga jefe), el nombre de su jefe y el nombre del jefe
+de su jefe. En caso de no tener jefe debe mostrar el valor “SIN
+JEFE”.*/
+
+SELECT e.nombre AS nombre_empleado, IFNULL(j.nombre, 'SIN JEFE') AS nombre_jefe, IFNULL(jj.nombre, 'SIN JEFE') AS nombre_jefe_jefe
+FROM empleado e
+LEFT JOIN empleado j ON e.id_jefe = j.id_empleado
+LEFT JOIN empleado jj ON j.id_jefe = jj.id_empleado;
+
+
+/* 3. Realizar una consulta que muestre las diferentes gamas de producto que
+ha comprado cada cliente (no se deben mostrar las filas duplicadas) cuya
+fecha de pedido esté comprendida entre el “10/01/2009” y el
+“15/05/2009”, y el estado sea “entregado”. Ordenar los resultados por el
+nombre del cliente y la gama de forma ascendente. Limitar el listado a
+los 10 primeros resultados. */
+
+SELECT DISTINCT c.nombre_cliente, gp.gama
+FROM cliente c
+JOIN pedido p ON c.id_cliente = p.id_cliente
+JOIN detalle_pedido dp ON p.codigo_pedido = dp.codigo_pedido
+JOIN producto pr ON dp.codigo_producto = pr.codigo_producto
+JOIN gama_producto gp ON pr.gama = gp.gama
+WHERE p.fecha_pedido BETWEEN '2009-01-10' AND '2009-05-15'
+AND p.estado = 'entregado'
+ORDER BY c.nombre_cliente ASC, gp.gama ASC
+LIMIT 10;
+
+
+
+/* 4. Devolver un listado con los 20 productos más vendidos
+junto al número total de unidades vendidas de aquellos
+pedidos realizados entre el “01/04/2008” y el
+“31/01/2009” cuyo estado se encuentre en entregado. El
+listado se debe ordenar por el número total de unidades
+vendidas de forma descendente. */
+
+SELECT p.nombre, SUM(dp.cantidad) AS total_vendidos
+FROM producto p
+JOIN detalle_pedido dp ON p.codigo_producto = dp.codigo_producto
+JOIN pedido pe ON dp.codigo_pedido = pe.codigo_pedido
+WHERE pe.fecha_pedido BETWEEN '2008-04-01' AND '2009-01-31'
+AND pe.estado = 'entregado'
+GROUP BY p.nombre
+ORDER BY total_vendidos DESC
+LIMIT 20;
+
+
+
+/* 5. Sin hacer uso de subconsultas devolver un listado que muestre solamente
+los empleados que no tienen un cliente asociado. */
+
+SELECT e.nombre AS nombre, CONCAT(e.apellido1, ' ', e.apellido2) AS apellidos
+FROM empleado e
+LEFT JOIN cliente c ON e.id_empleado = c.id_empleado_rep_ventas
+WHERE c.id_cliente IS NULL;
+
+
+
+/* 6. Devolver el nombre del cliente con menor límite de crédito de la región de
+“Barcelona” (no se puede utilizar LIMIT ni ORDER BY en la sentencia SELECT). */
+
+SELECT nombre_cliente 
+FROM cliente 
+WHERE region = 'Barcelona' 
+ORDER BY limite_credito 
+LIMIT 1;
+
+
+/* 7. Devolver el nombre del producto del que se han vendido más unidades
+(tener en cuenta que se tendrá que calcular cuál es el número total de
+unidades que se han vendido de cada producto a partir de los datos de la
+tabla detalle_pedido). */
+
+SELECT p.nombre, SUM(dp.cantidad) AS total_vendidos
+FROM producto p
+JOIN detalle_pedido dp ON p.codigo_producto = dp.codigo_producto
+GROUP BY p.codigo_producto
+ORDER BY total_vendidos DESC
+LIMIT 1;
+
+
+
+/* 8. Devolver un listado con los nombres de los clientes que han realizado algún
+pedido pero no han realizado ningún pago. Ordenar el resultado por el nombre
+de cliente de forma ascendente. */
+
+SELECT DISTINCT c.nombre_cliente
+FROM cliente c
+JOIN pedido p ON c.id_cliente = p.id_cliente
+LEFT JOIN pago pg ON p.id_cliente = pg.id_cliente
+WHERE pg.id_cliente IS NULL
+ORDER BY c.nombre_cliente ASC;
+
+
+/* 9. Obtener el total facturado por producto (únicamente se deben
+tener en cuenta los pedidos realizados en el año 2009 y que se
+encuentren en estado de entregados para el cálculo) del cliente
+que tiene menor límite de crédito. */
+
+SELECT 
+  p.nombre AS nombre_producto, 
+  SUM(dp.cantidad * dp.precio_unidad) AS total_facturado 
+FROM 
+  pedido pe
+  INNER JOIN detalle_pedido dp ON pe.codigo_pedido = dp.codigo_pedido
+  INNER JOIN producto p ON dp.codigo_producto = p.codigo_producto
+  INNER JOIN cliente c ON pe.id_cliente = c.id_cliente
+WHERE 
+  pe.estado = 'Entregado'
+  AND YEAR(pe.fecha_entrega) = 2009
+  AND c.limite_credito = (
+    SELECT 
+      MIN(limite_credito) 
+    FROM 
+      cliente 
+  )
+GROUP BY 
+  p.nombre
+ORDER BY 
+  total_facturado DESC;
+
+
+
+/* 10. Obtener los productos de la gama “Ornamentales” que tengan un precio de
+venta mayor o igual al de todos los productos de la gama “Frutales” (no se
+puede utilizar las funciones MAX y MIN, ni la cláusula ORDER BY) */
+
+SELECT nombre
+FROM producto
+WHERE gama = 'Ornamentales' 
+AND precio_venta >= ALL (SELECT precio_venta 
+                          FROM producto 
+                          WHERE gama = 'Frutales')
+
+
+
+/*11. Obtener el nombre de los productos con mayor stock que compra un cliente
+cuyo representante de ventas trabaje en la oficina de la ciudad de Madrid. */
+
+SELECT producto.nombre
+FROM producto
+INNER JOIN detalle_pedido ON producto.codigo_producto = detalle_pedido.codigo_producto
+INNER JOIN pedido ON detalle_pedido.codigo_pedido = pedido.codigo_pedido
+INNER JOIN cliente ON pedido.id_cliente = cliente.id_cliente
+INNER JOIN empleado ON cliente.id_empleado_rep_ventas = empleado.id_empleado
+INNER JOIN oficina ON empleado.codigo_oficina = oficina.codigo_oficina
+WHERE oficina.ciudad = 'Madrid'
+AND cliente.id_cliente IN (
+  SELECT id_cliente
+  FROM pedido
+  WHERE estado = 'Entregado'
+  GROUP BY id_cliente
+  HAVING SUM(cantidad) >= ALL (
+    SELECT SUM(cantidad)
+    FROM detalle_pedido
+    GROUP BY codigo_producto
+  )
+)
+ORDER BY producto.cantidad_en_stock DESC
+LIMIT 1;
+
+
+/*12. Devolver las oficinas donde no trabajan ninguno de los empleados que
+hayan sido los representantes de ventas de algún cliente que haya realizado
+la compra de algún producto de la gama Frutales. */
+
+SELECT o.codigo_oficina, o.ciudad, o.pais, o.region, o.codigo_postal, o.telefono, o.linea_direccion1, o.linea_direccion2 
+FROM jardineria.oficina o
+WHERE o.codigo_oficina NOT IN (
+  SELECT DISTINCT e.codigo_oficina
+  FROM jardineria.empleado e
+  WHERE e.id_empleado IN (
+    SELECT DISTINCT c.id_empleado_rep_ventas
+      FROM jardineria.cliente c
+      JOIN jardineria.pedido p ON c.id_cliente = p.id_cliente
+      JOIN jardineria.detalle_pedido dp ON p.codigo_pedido = dp.codigo_pedido
+      JOIN jardineria.producto pr ON dp.codigo_producto = pr.codigo_producto
+      WHERE pr.gama = 'Frutales'
+    )
+)
+
+
+
