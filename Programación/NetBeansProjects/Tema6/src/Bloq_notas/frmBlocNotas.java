@@ -4,7 +4,7 @@
  */
 package Bloq_notas;
 
-import com.formdev.flatlaf.FlatLightLaf;
+//import com.formdev.flatlaf.FlatLightLaf;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -174,7 +174,7 @@ public class frmBlocNotas extends javax.swing.JFrame {
      */
     public static void main(String args[]) {
         try{
-    UIManager.setLookAndFeel( new FlatLightLaf() );
+    //UIManager.setLookAndFeel( new FlatLightLaf() );
         }catch(Exception e){
             System.out.println("Error al cambiar el look and feel");
             System.out.println(e.getMessage());
