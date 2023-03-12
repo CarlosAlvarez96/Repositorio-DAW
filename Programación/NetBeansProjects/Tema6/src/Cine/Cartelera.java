@@ -14,10 +14,15 @@ public class Cartelera {
         File archivo = new File(ruta);
         FileReader lector = new FileReader(archivo);
         BufferedReader br = new BufferedReader(lector);
-        return cartelera;
         
         for(int i = 0; i < br.lines().count();i++){
-            br.
+            String linea = br.readLine();
+            String [] arrayLinea = linea.split(":");
+            String nombre = arrayLinea[1];
+            Sala nuevaSala = new Sala(i+1, 50, new Pelicula(nombre));
+            cartelera.add(nuevaSala);
         }
+        return cartelera;
     }
+    
 }
